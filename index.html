@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSOP Kelas II - Pelaporan Kinerja Bulanan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>🏛️ KSOP Kelas II Cirebon</h1>
+            <p>Sistem Pelaporan Kinerja Bulanan</p>
+        </div>
+        <!-- Navigation tambahan -->
+        <nav class="header-nav">
+            <a id="navDash" href="javascript:showPage('dashboard')" class="nav-link">Dashboard</a>
+            <a id="navForm" href="javascript:showPage('form')" class="nav-link">Isi Laporan</a>
+            <a id="navGraphic" href="javascript:showPage('graphic')" class="nav-link">Lihat Grafik</a>
+            <a id="navPendukung" href="javascript:showPage('dataPendukung')" class="nav-link">📎 Data Pendukung</a>
+            <a id="navLogout" href="javascript:logout()" class="nav-link">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Login Page -->
+    <div class="login-page" id="loginPage">
+        <div class="login-box">
+            <h2>Login</h2>
+            <p>Sistem Pelaporan KSOP Kelas II</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Masuk</button>
+            </form>
+            <p class="demo-info">
+                Username: <strong>admin</strong> | Password: <strong>123456</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div class="dashboard-page" id="dashboardPage">
+        <div class="dashboard-header">
+            <h2>Selamat Datang di Sistem Pelaporan Kinerja KSOP Kelas II</h2>
+            <p>Website ini digunakan untuk pelaporan kinerja bulanan KSOP Kelas II pada seksi berikut:</p>
+            <div class="seksi-list">
+                <div class="seksi-card">
+                    <h3>📋 Tata Usaha</h3>
+                    <p>Pelaporan kinerja bidang administrasi, persuratan, dan pengurusan internal</p>
+                </div>
+                <div class="seksi-card">
+                    <h3>⚓ Status Hukum & Kapal</h3>
+                    <p>Pelaporan sertifikasi kapal dan status hukum kepelabuhanan</p>
+                </div>
+                <div class="seksi-card">
+                    <h3>🛡️ Keselamatan Berlayar</h3>
+                    <p>Pelaporan penjagaan laut, patroli, dan keselamatan pelayaran</p>
+                </div>
+                <div class="seksi-card">
+                    <h3>🚢 Lalu Lintas Laut</h3>
+                    <p>Pelaporan angkutan laut, lalu lintas kapal, dan operasional pelabuhan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Page -->
+    <div class="form-page" id="formPage">
+        <div class="form-container">
+            <h2>Formulir Pelaporan Kinerja Bulanan</h2>
+            <div id="formAlert" class="alert"></div>
+
+            <form id="laporanForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="bulan">Bulan:</label>
+                    <select id="bulan" required>
+                        <option value="">-- Pilih Bulan --</option>
+                        <option value="Januari">Januari</option>
+                        <option value="Februari">Februari</option>
+                        <option value="Maret">Maret</option>
+                        <option value="April">April</option>
+                        <option value="Mei">Mei</option>
+                        <option value="Juni">Juni</option>
+                        <option value="Juli">Juli</option>
+                        <option value="Agustus">Agustus</option>
+                        <option value="September">September</option>
+                        <option value="Oktober">Oktober</option>
+                        <option value="November">November</option>
+                        <option value="Desember">Desember</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tahun">Tahun:</label>
+                    <select id="tahun" required>
+                        <option value="">-- Pilih Tahun --</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="seksi">Seksi:</label>
+                    <select id="seksi" required>
+                        <option value="">-- Pilih Seksi --</option>
+                        <option value="Tata Usaha">Tata Usaha</option>
+                        <option value="Status Hukum dan Kapal">Status Hukum dan Kapal</option>
+                        <option value="Keselamatan Berlayar Penjagaan dan Patroli">Keselamatan Berlayar, Penjagaan dan Patroli</option>
+                        <option value="Lalu Lintas Angkutan Laut">Lalu Lintas Angkutan Laut</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="indikator">Indikator Kinerja:</label>
+                    <textarea id="indikator" placeholder="Masukkan indikator kinerja" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="target">Target Bulanan:</label>
+                    <input type="number" id="target" placeholder="Contoh: 100" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="realisasi">Realisasi Bulanan:</label>
+                    <input type="number" id="realisasi" placeholder="Contoh: 95" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="catatan">Catatan/Keterangan:</label>
+                    <textarea id="catatan" placeholder="Masukkan catatan tambahan (opsional)"></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn-submit">Simpan Data</button>
+                    <button type="button" class="btn-back" onclick="showPage('dashboard')">Kembali</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Graphic Page -->
+    <div class="graphic-page" id="graphicPage">
+        <div class="graphic-container">
+            <h3>📊 Grafik dan Tabel Data Kinerja</h3>
+            
+            <div class="filter-section">
+                <select id="filterBulan" title="Filter by Month">
+                    <option value="">Semua Bulan</option>
+                </select>
+
+                <select id="filterSeksi" title="Filter by Section">
+                    <option value="">Semua Seksi</option>
+                </select>
+
+                <select id="filterTahun" title="Filter by Year">
+                    <option value="">Semua Tahun</option>
+                </select>
+
+                <button type="button" class="btn-submit" id="btnMuatData" onclick="handleMuatData()">Muat Data</button>
+                
+                <!-- Tambah tombol Export & Print -->
+                <button type="button" class="btn-submit" onclick="exportToGoogleSheets()" title="Download sebagai CSV">📥 Export CSV</button>
+                <button type="button" class="btn-submit" onclick="printTable()" title="Cetak tabel">🖨️ Cetak</button>
+                
+                <button type="button" class="btn-back" onclick="showPage('dashboard')">Kembali</button>
+            </div>
+
+            <!-- Added chart container dengan responsive height -->
+            <div id="chartContainer">
+                <!-- canvas akan dibuat otomatis oleh script jika Chart.js terload -->
+            </div>
+
+            <div id="dataContainer">
+                <div class="no-data">Data akan ditampilkan di sini setelah Anda mengisi form</div>
+            </div>
+
+            <!-- Tabel: tambahkan thead + tbody (tbody id=dataTableBody) -->
+            <table id="dataTable" class="data-table">
+                <thead>
+                    <tr class="table-header-row">
+                        <th>Tanggal</th>
+                        <th>Seksi</th>
+                        <th>Bulan</th>
+                        <th>Tahun</th>
+                        <th>Indikator</th>
+                        <th>Target</th>
+                        <th>Realisasi</th>
+                        <th>Catatan</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody"></tbody>
+            </table>
+
+            <!-- Pagination Controls -->
+            <div id="paginationControls"></div>
+        </div>
+    </div>
+
+    <!-- PAGE: Data Pendukung -->
+    <div id="dataPendukungPage" class="data-pendukung-page">
+        <h2>📎 Pengumpulan Data Pendukung</h2>
+        <p>Upload bukti pendukung untuk setiap laporan kinerja</p>
+
+        <div class="data-pendukung-form-box">
+            <div class="pendukung-form-wrapper">
+                <form id="dataPendukungForm" onsubmit="handleDataPendukungSubmit(event)">
+                    
+                    <!-- Pilih Seksi -->
+                    <div class="pendukung-form-group">
+                        <label for="pilihSeksiPendukung" class="pendukung-form-label">
+                            Pilih Seksi *
+                        </label>
+                        <select id="pilihSeksiPendukung" required class="pendukung-form-select">
+                            <option value="">-- Pilih Seksi --</option>
+                            <option value="Tata Usaha">Tata Usaha</option>
+                            <option value="Status Hukum dan Kapal">Status Hukum dan Kapal</option>
+                            <option value="Keselamatan Berlayar Penjagaan dan Patroli">Keselamatan Berlayar, Penjagaan dan Patroli</option>
+                            <option value="Lalu Lintas Angkutan Laut">Lalu Lintas Angkutan Laut</option>
+                       </select>
+                    </div>
+
+                    <!-- Pilih Laporan -->
+                    <div class="pendukung-form-group">
+                        <label for="pilihLaporan" class="pendukung-form-label">
+                            Pilih Laporan Kinerja *
+                        </label>
+                        <select id="pilihLaporan" required class="pendukung-form-select">
+                            <option value="">-- Pilih Laporan --</option>
+                            <option value="">Laporan Kinerja Seksi</option>
+                        </select>
+                    </div>
+
+                    <!-- Jenis Dokumen -->
+                    <div class="pendukung-form-group">
+                        <label for="jenisDokumen" class="pendukung-form-label">
+                            Jenis Dokumen Pendukung *
+                        </label>
+                        <select id="jenisDokumen" required class="pendukung-form-select">
+                            <option value="">-- Pilih Jenis --</option>
+                            <option value="Laporan Tertulis">📝 Laporan Tertulis</option>
+                            <option value="Foto/Screenshot">📷 Foto/Screenshot</option>
+                            <option value="Video">🎥 Video</option>
+                            <option value="Sertifikat">🏅 Sertifikat</option>
+                            <option value="Bukti Pembayaran">💳 Bukti Pembayaran</option>
+                            <option value="Surat Keterangan">📄 Surat Keterangan</option>
+                            <option value="Data Statistik">📊 Data Statistik</option>
+                            <option value="Lainnya">📦 Lainnya</option>
+                        </select>
+                    </div>
+
+                    <!-- Deskripsi -->
+                    <div class="pendukung-form-group">
+                        <label for="deskripsiPendukung" class="pendukung-form-label">
+                            Deskripsi Singkat *
+                        </label>
+                        <textarea id="deskripsiPendukung" required placeholder="Jelaskan isi dokumen pendukung..." 
+                                  class="pendukung-form-textarea"></textarea>
+                    </div>
+
+                    <!-- Upload File -->
+                    <div class="pendukung-form-group">
+                        <label for="filePendukung" class="pendukung-form-label">
+                            Upload File (Max 10MB) *
+                        </label>
+                        <input type="file" id="filePendukung" required accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.mp4,.mov" 
+                               class="pendukung-form-file">
+                        <small class="pendukung-form-hint">
+                            Format: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG, MP4, MOV
+                        </small>
+                    </div>
+
+                    <!-- Link/URL (opsional) -->
+                    <div class="pendukung-form-group">
+                        <label for="linkPendukung" class="pendukung-form-label">
+                            Link/URL Dokumen (Opsional)
+                        </label>
+                        <input type="url" id="linkPendukung" placeholder="https://drive.google.com/..." 
+                               class="pendukung-form-input">
+                    </div>
+
+                    <!-- Alert -->
+                    <div id="pendukungAlert" class="pendukung-form-alert"></div>
+
+                    <!-- Buttons -->
+                    <div class="pendukung-form-buttons">
+                        <button type="submit" class="btn-submit pendukung-btn-flex">✅ Simpan Data Pendukung</button>
+                        <button type="reset" class="btn-submit pendukung-btn-flex pendukung-btn-reset">🔄 Reset</button>
+                        <button type="button" class="btn-back pendukung-btn-flex" onclick="showPage('dashboard')">Kembali</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tabel Data Pendukung -->
+            <h3>📋 Daftar Data Pendukung yang Dikumpulkan</h3>
+            <div class="pendukung-table-wrapper">
+                <table id="tabelPendukung" class="pendukung-table">
+                    <thead>
+                        <tr class="pendukung-table-header">
+                            <th>No</th>
+                            <th>Tanggal Upload</th>
+                            <th>Seksi</th>
+                            <th>Laporan</th>
+                            <th>Jenis Dokumen</th>
+                            <th>Deskripsi</th>
+                            <th>File</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelPendukungBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Statistik -->
+            <div class="pendukung-stats">
+                <div class="pendukung-stat-card pendukung-stat-blue">
+                    <div class="pendukung-stat-label">Total File</div>
+                    <div class="pendukung-stat-value" id="totalFilePendukung">0</div>
+                </div>
+                <div class="pendukung-stat-card pendukung-stat-orange">
+                    <div class="pendukung-stat-label">Total Size</div>
+                    <div class="pendukung-stat-value" id="totalSizePendukung">0 MB</div>
+                </div>
+                <div class="pendukung-stat-card pendukung-stat-purple">
+                    <div class="pendukung-stat-label">Jenis Dokumen</div>
+                    <div class="pendukung-stat-value" id="totalJenisPendukung">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 KSOP Kelas II Cirebon. Semua hak dilindungi.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function handleMuatData() {
+            console.log('Muat Data clicked');
+            loadDataFromSheet();
+        }
+    </script>
+</body>
+</html>
